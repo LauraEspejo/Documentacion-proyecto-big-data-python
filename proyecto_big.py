@@ -54,6 +54,13 @@ def merge_datasets(sales_df: pd.DataFrame, specs_df: pd.DataFrame) -> pd.DataFra
 
     Se usa un inner join para conservar solo registros con información
     comercial y técnica disponible.
+
+    Args:
+        sales_df: DataFrame con datos de ventas.
+        specs_df: DataFrame con especificaciones técnicas.
+
+    Returns:
+        DataFrame unificado para el análisis de mercado.
     """
     sales_clean = standardize_merge_keys(sales_df, ["brand", "model"])
     specs_clean = standardize_merge_keys(specs_df, ["brand", "model"])
@@ -61,7 +68,15 @@ def merge_datasets(sales_df: pd.DataFrame, specs_df: pd.DataFrame) -> pd.DataFra
 
 
 def sales_by_dimension(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
-    """Calcula ventas e ingresos agregados por una dimensión de análisis."""
+    """Calcula ventas e ingresos agregados por una dimensión de análisis.
+
+    Args:
+        df: DataFrame unificado de ventas y especificaciones.
+        dimension: Columna usada para agrupar (ej. brand, model, city, year).
+
+    Returns:
+        DataFrame agregado con columnas de dimensión, units_sold y revenue.
+    """
     grouped = (
         df.groupby(dimension, dropna=False)[["units_sold", "revenue"]]
         .sum()
@@ -72,7 +87,14 @@ def sales_by_dimension(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
 
 
 def technical_sales_correlation(df: pd.DataFrame) -> pd.DataFrame:
-    """Genera matriz de correlación entre variables numéricas relevantes."""
+    """Genera matriz de correlación entre variables numéricas relevantes.
+
+    Args:
+        df: DataFrame unificado con variables de negocio y técnicas.
+
+    Returns:
+        DataFrame de correlación para variables numéricas disponibles.
+    """
     numeric_cols = [
         "units_sold",
         "revenue",
@@ -88,7 +110,13 @@ def technical_sales_correlation(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def run_analysis(sales_path: str | Path, specs_path: str | Path, output_dir: str | Path) -> None:
-    """Ejecuta el flujo completo de análisis y exporta resultados base."""
+    """Ejecuta el flujo completo de análisis y exporta resultados base.
+
+    Args:
+        sales_path: Ruta al CSV de ventas.
+        specs_path: Ruta al CSV de especificaciones.
+        output_dir: Carpeta de salida para artefactos generados.
+    """
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 

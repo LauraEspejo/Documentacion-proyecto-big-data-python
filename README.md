@@ -1,4 +1,4 @@
-# Documentación del proyecto: análisis de mercado de celulares
+# DOCUMENTACIÓN DEL PROYECTO: análisis de mercado de celulares
 
 Este repositorio documenta un flujo de análisis de datos en Python para estudiar el mercado de celulares combinando **ventas** y **especificaciones técnicas**.
 
